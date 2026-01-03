@@ -2,12 +2,13 @@ package config
 
 import (
 	"fmt"
-	"github.com/jessevdk/go-flags"
-	"github.com/sqshq/sampler/console"
-	"gopkg.in/yaml.v3"
 	"io/ioutil"
 	"log"
 	"os"
+
+	"github.com/jessevdk/go-flags"
+	"github.com/sqshq/sampler/console"
+	"gopkg.in/yaml.v3"
 )
 
 type Config struct {
@@ -19,6 +20,7 @@ type Config struct {
 	SparkLines []SparkLineConfig `yaml:"sparklines,omitempty"`
 	TextBoxes  []TextBoxConfig   `yaml:"textboxes,omitempty"`
 	AsciiBoxes []AsciiBoxConfig  `yaml:"asciiboxes,omitempty"`
+	Lists      []ListConfig      `yaml:"lists,omitempty"`
 }
 
 func LoadConfig() (*Config, Options) {
@@ -91,6 +93,12 @@ func (c *Config) findComponent(componentType ComponentType, componentTitle strin
 		for i, component := range c.TextBoxes {
 			if component.Title == componentTitle {
 				return &c.TextBoxes[i].ComponentConfig
+			}
+		}
+	case TypeList:
+		for i, component := range c.Lists {
+			if component.Title == componentTitle {
+				return &c.Lists[i].ComponentConfig
 			}
 		}
 	}

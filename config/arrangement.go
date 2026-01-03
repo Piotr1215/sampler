@@ -1,9 +1,10 @@
 package config
 
 import (
+	"image"
+
 	ui "github.com/gizak/termui/v3"
 	"github.com/sqshq/sampler/console"
-	"image"
 )
 
 func (c *Config) setDefaultArrangement() {
@@ -110,6 +111,9 @@ func getComponents(c *Config) []*ComponentConfig {
 	}
 	for i := range c.TextBoxes {
 		components = append(components, &c.TextBoxes[i].ComponentConfig)
+	}
+	for i := range c.Lists {
+		components = append(components, &c.Lists[i].ComponentConfig)
 	}
 
 	return components

@@ -1,0 +1,46 @@
+variables:
+  KUBECONFIG: /home/decoder/dev/homelab/kubeconfig
+
+lists:
+  - title: Pods
+    rate-ms: 2000
+    items:
+      - label: Running
+        sample: kubectl get pods -A --no-headers 2>/dev/null | grep Running | wc -l
+      - label: Pending
+        sample: kubectl get pods -A --no-headers 2>/dev/null | grep Pending | wc -l
+      - label: Failed
+        sample: kubectl get pods -A --no-headers 2>/dev/null | grep -E 'Error|CrashLoop' | wc -l
+
+  - title: Nodes
+    rate-ms: 5000
+    items:
+      - label: Ready
+        sample: kubectl get nodes --no-headers 2>/dev/null | grep -w Ready | wc -l
+      - label: NotReady
+        sample: kubectl get nodes --no-headers 2>/dev/null | grep -v Ready | wc -l
+
+sparklines:
+  - title: Pod Count
+    rate-ms: 3000
+    scale: 0
+    sample: kubectl get pods -A --no-headers 2>/dev/null | wc -l
+
+barcharts:
+  - title: Namespace Pods
+    rate-ms: 5000
+    scale: 0
+    items:
+      - label: default
+        sample: kubectl get pods -n default --no-headers 2>/dev/null | wc -l
+      - label: kube-system
+        sample: kubectl get pods -n kube-system --no-headers 2>/dev/null | wc -l
+
+textboxes:
+  - title: Pods (top 10)
+    rate-ms: 3000
+    sample: kubectl get pods -A --no-headers 2>/dev/null | head -10
+
+  - title: Recent Events
+    rate-ms: 5000
+    sample: kubectl get events -A --sort-by='.lastTimestamp' 2>/dev/null | tail -5

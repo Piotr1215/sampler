@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+
 	"github.com/sqshq/sampler/console"
 )
 
@@ -36,6 +37,11 @@ func (c *Config) validate() {
 	for _, c := range c.TextBoxes {
 		components = append(components, c.ComponentConfig)
 		validateItemScripts(c.Title, c.Item)
+	}
+	for _, c := range c.Lists {
+		components = append(components, c.ComponentConfig)
+		validateLabelsUniqueness(c.Title, c.Items)
+		validateItemsScripts(c.Title, c.Items)
 	}
 
 	validateTitlesUniqueness(components)

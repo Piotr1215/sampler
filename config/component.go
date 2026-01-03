@@ -1,9 +1,10 @@
 package config
 
 import (
+	"image"
+
 	ui "github.com/gizak/termui/v3"
 	"github.com/sqshq/sampler/console"
-	"image"
 )
 
 type ComponentType rune
@@ -15,6 +16,7 @@ const (
 	TypeTextBox   ComponentType = 3
 	TypeAsciiBox  ComponentType = 4
 	TypeGauge     ComponentType = 5
+	TypeList      ComponentType = 6
 )
 
 type ComponentConfig struct {
@@ -91,6 +93,12 @@ type TextBoxConfig struct {
 	ComponentConfig `yaml:",inline"`
 	Item            `yaml:",inline"`
 	Border          *bool `yaml:"border,omitempty"`
+}
+
+type ListConfig struct {
+	ComponentConfig `yaml:",inline"`
+	Items           []Item `yaml:"items"`
+	Border          *bool  `yaml:"border,omitempty"`
 }
 
 type RunChartConfig struct {

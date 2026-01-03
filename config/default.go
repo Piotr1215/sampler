@@ -145,6 +145,23 @@ func (c *Config) setDefaultValues() {
 
 		c.TextBoxes[i] = box
 	}
+
+	for i, list := range c.Lists {
+
+		setDefaultTriggersValues(list.Triggers)
+		list.ComponentConfig.Type = TypeList
+
+		if list.RateMs == nil {
+			r := defaultRateMs
+			list.RateMs = &r
+		}
+		if list.Border == nil {
+			border := true
+			list.Border = &border
+		}
+
+		c.Lists[i] = list
+	}
 }
 
 func setDefaultTriggersValues(triggers []TriggerConfig) {
@@ -243,5 +260,14 @@ func (c *Config) setDefaultItemSettings() {
 			t.Item.Pty = &defaultPty
 		}
 		c.TextBoxes[i] = t
+	}
+
+	for _, l := range c.Lists {
+		for j, item := range l.Items {
+			if item.Pty == nil {
+				item.Pty = &defaultPty
+			}
+			l.Items[j] = item
+		}
 	}
 }

@@ -1,0 +1,10 @@
+lists:
+  - title: Test List
+    rate-ms: 1000
+    items:
+      - label: Date
+        sample: date +%H:%M:%S
+      - label: User
+        sample: whoami
+      - label: PWD
+        sample: pwd

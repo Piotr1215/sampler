@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	ui "github.com/gizak/termui/v3"
 	"github.com/sqshq/sampler/asset"
 	"github.com/sqshq/sampler/component"
@@ -8,6 +10,7 @@ import (
 	"github.com/sqshq/sampler/component/barchart"
 	"github.com/sqshq/sampler/component/gauge"
 	"github.com/sqshq/sampler/component/layout"
+	"github.com/sqshq/sampler/component/list"
 	"github.com/sqshq/sampler/component/runchart"
 	"github.com/sqshq/sampler/component/sparkline"
 	"github.com/sqshq/sampler/component/textbox"
@@ -15,7 +18,6 @@ import (
 	"github.com/sqshq/sampler/console"
 	"github.com/sqshq/sampler/data"
 	"github.com/sqshq/sampler/event"
-	"time"
 )
 
 type Starter struct {
@@ -51,6 +53,10 @@ func (s *Starter) startAll() []*data.Sampler {
 	for _, c := range s.cfg.TextBoxes {
 		cpt := textbox.NewTextBox(c, s.palette)
 		samplers = append(samplers, s.start(cpt, cpt.Consumer, c.ComponentConfig, []config.Item{c.Item}, c.Triggers))
+	}
+	for _, c := range s.cfg.Lists {
+		cpt := list.NewList(c, s.palette)
+		samplers = append(samplers, s.start(cpt, cpt.Consumer, c.ComponentConfig, c.Items, c.Triggers))
 	}
 	return samplers
 }
