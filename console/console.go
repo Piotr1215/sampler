@@ -29,9 +29,16 @@ const (
 	AsciiFont3D AsciiFont = "3d"
 )
 
-func Init() {
+func ResolveTitle(title string) string {
+	if title == "" {
+		return AppTitle
+	}
+	return title
+}
 
-	fmt.Printf("\033]0;%s\007", AppTitle)
+func Init(title string) {
+
+	fmt.Printf("\033]0;%s\007", ResolveTitle(title))
 
 	if err := ui.Init(); err != nil {
 		log.Fatalf("Failed to initialize ui: %v", err)

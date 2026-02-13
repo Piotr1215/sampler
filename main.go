@@ -74,7 +74,7 @@ func main() {
 
 	cfg, opt := config.LoadConfig()
 
-	console.Init()
+	console.Init(cfg.Title)
 	defer console.Close()
 
 	player := asset.NewAudioPlayer()
